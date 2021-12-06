@@ -1,1 +1,29 @@
+# pip install tensorflow # install tensorflow backend
+# pip install h5py graphviz pydot # optionally install other dependencies
+# pip install keras # install keras
 
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.optimizers import SGD
+
+# Load Data
+from keras.datasets import mnist
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+# ... more preprocessing
+
+# Define Model
+model = Sequential()
+
+# Add Layer
+model.add(Dense(256, activation = 'Sigmoid', input_shape = (784,)))
+model.add(Dense(256, activation = 'softmax'))
+
+# Compile model with loss and optimizer 
+model.compile(loss = 'categorical_crossentropy', 
+                      optimizer = SGD(), 
+                      metrics = ['accuracy'])
+                      
+# Train Network
+model.fit(x_train, y_train, batch_size = 128, 
+          epoch = 10, 
+          validation_data = (x_test, y_test))
